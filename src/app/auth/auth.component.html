@@ -1,0 +1,18 @@
+<div class="m-5">
+  <h1 class="title">
+    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    Bem-vindo(a) ao Pro Attendance
+  </h1>
+  <h3 class="subtitle">Feito de professor para professor</h3>
+  <div class="tabs is-toggle-rounded">
+    <ul>
+      <li [class.is-active]="route == '/auth/login'">
+        <a routerLink="login">Login</a>
+      </li>
+      <li [class.is-active]="route == '/auth/signup'">
+        <a routerLink="signup">Criar conta</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<router-outlet></router-outlet>

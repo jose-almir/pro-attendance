@@ -1,0 +1,91 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="m-5">
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          [class.is-danger]="email.touched && email.invalid"
+          class="input"
+          type="email"
+          formControlName="email"
+          placeholder="Seu email da soulcodeacademy.org"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+        </span>
+        <span
+          *ngIf="email.touched && email.invalid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        </span>
+        <span *ngIf="email.valid" class="icon is-small is-right">
+          <fa-icon [icon]="faCheck"></fa-icon>
+        </span>
+      </div>
+      <p *ngIf="email.touched && email.invalid" class="help is-danger">
+        <span *ngIf="email.hasError('required')">Email obrigatório</span>
+        <span *ngIf="email.hasError('email')">Email inválido</span>
+        <span *ngIf="email.hasError('onlysoulcode')">
+          Apenas o domínio soulcodeacademy.org é permitido
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label reset-password">
+        Senha
+        <a (click)="onToggleModal()" class="help">Esqueceu sua senha?</a>
+      </label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          class="input"
+          type="password"
+          formControlName="password"
+          [class.is-danger]="password.touched && password.invalid"
+          placeholder="Sua senha"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faKey"></fa-icon>
+        </span>
+        <span
+          *ngIf="password.touched && password.invalid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        </span>
+        <span
+          *ngIf="password.touched && password.valid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faCheck"></fa-icon>
+        </span>
+      </div>
+      <p *ngIf="password.touched && password.invalid" class="help is-danger">
+        <span *ngIf="password.hasError('required')">Senha obrigatória</span>
+        <span *ngIf="password.hasError('minlength')">
+          O mínimo é
+          {{ password.errors!["minlength"].requiredLength }} caracteres
+        </span>
+      </p>
+    </div>
+    <button
+      [disabled]="loginForm.invalid || submitting"
+      class="button is-info is-fullwidth"
+      [class.is-loading]="submitting"
+    >
+      Login
+    </button>
+    <app-hr-label label="ou"></app-hr-label>
+    <button
+      (click)="onGoogle()"
+      type="button"
+      [disabled]="signingIn"
+      [class.is-loading]="signingIn"
+      class="button is-danger is-fullwidth"
+    >
+      <fa-icon class="mx-1" [icon]="faGoogle"></fa-icon>
+      Entrar com o google
+    </button>
+  </div>
+</form>
+<app-reset-password [active]="activeModal" (deactivate)="onToggleModal()"></app-reset-password>

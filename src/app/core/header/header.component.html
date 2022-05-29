@@ -1,0 +1,30 @@
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" routerLink="/">
+      <img
+        src="https://soulcodeacademy.org/assets/images/logo/light-logo.png"
+        alt="Soulcode Academy"
+      />
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      (click)="active = !active"
+      [class.is-active]="active"
+      aria-label="menu"
+      aria-expanded="false"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" [class.is-active]="active">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="/turmas"> Turmas </a>
+      <a class="navbar-item" routerLink="/chamadas"> Chamadas </a>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

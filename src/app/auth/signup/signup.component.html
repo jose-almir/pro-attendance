@@ -1,0 +1,137 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="m-5">
+    <div class="field">
+      <label class="label">Nome</label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          [class.is-danger]="displayName.touched && displayName.invalid"
+          type="text"
+          formControlName="displayName"
+          class="input"
+          placeholder="Seu nome"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faUser"></fa-icon>
+        </span>
+        <span
+          *ngIf="displayName.touched && displayName.invalid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        </span>
+        <p
+          *ngIf="displayName.touched && displayName.invalid"
+          class="help is-danger"
+        >
+          Nome obrigatório
+        </p>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          [class.is-danger]="email.touched && email.invalid"
+          class="input"
+          type="email"
+          formControlName="email"
+          placeholder="Seu email da soulcodeacademy.org"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+        </span>
+        <span
+          *ngIf="email.touched && email.invalid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        </span>
+        <span *ngIf="email.valid" class="icon is-small is-right">
+          <fa-icon [icon]="faCheck"></fa-icon>
+        </span>
+      </div>
+      <p *ngIf="email.touched && email.invalid" class="help is-danger">
+        <span *ngIf="email.hasError('required')">Email obrigatório</span>
+        <span *ngIf="email.hasError('email')">Email inválido</span>
+        <span *ngIf="email.hasError('onlysoulcode')">
+          Apenas o domínio soulcodeacademy.org é permitido
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Senha</label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          class="input"
+          type="password"
+          formControlName="password"
+          [class.is-danger]="password.touched && password.invalid"
+          placeholder="Sua senha"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faKey"></fa-icon>
+        </span>
+        <span
+          *ngIf="password.touched && password.invalid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        </span>
+        <span
+          *ngIf="password.touched && password.valid"
+          class="icon is-small is-right"
+        >
+          <fa-icon [icon]="faCheck"></fa-icon>
+        </span>
+      </div>
+      <p *ngIf="password.touched && password.invalid" class="help is-danger">
+        <span *ngIf="password.hasError('required')">Senha obrigatória</span>
+        <span *ngIf="password.hasError('minlength')">
+          O mínimo é
+          {{ password.errors!["minlength"].requiredLength }} caracteres
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Confirmar senha</label>
+      <div class="control has-icons-left has-icons-right">
+        <input
+          class="input"
+          type="password"
+          [class.is-danger]="
+            signupForm.touched && signupForm.hasError('matchPasswords')
+          "
+          formControlName="password_confirm"
+          placeholder="Sua senha novamente"
+        />
+        <span class="icon is-small is-left">
+          <fa-icon [icon]="faKey"></fa-icon>
+        </span>
+        <p
+          *ngIf="signupForm.touched && signupForm.hasError('matchPasswords')"
+          class="help is-danger"
+        >
+          As senhas não correspondem
+        </p>
+      </div>
+    </div>
+    <button
+      [disabled]="signupForm.invalid || submitting"
+      class="button is-info is-fullwidth"
+      [class.is-loading]="submitting"
+    >
+      Cadastrar
+    </button>
+    <app-hr-label label="ou"></app-hr-label>
+    <button
+      (click)="onGoogle()"
+      type="button"
+      [disabled]="signingIn"
+      [class.is-loading]="signingIn"
+      class="button is-danger is-fullwidth"
+    >
+      <fa-icon class="mx-1" [icon]="faGoogle"></fa-icon>
+      Entrar com o google
+    </button>
+  </div>
+</form>
