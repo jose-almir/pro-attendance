@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserVerifiedGuard } from '../shared/guards/user-verified.guard';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+
+const redirectUnloggedInToLogin = () => redirectUnauthorizedTo(['/auth/login'])
 
 const routes: Routes = [
   {
@@ -13,6 +19,11 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
     ],
+  },
+  {
+    path: 'email',
+    component: VerifyEmailComponent,
+    ...canActivate(redirectUnloggedInToLogin),
   },
 ];
 

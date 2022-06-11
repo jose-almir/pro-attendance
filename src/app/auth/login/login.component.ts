@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseError } from '@angular/fire/app';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -7,6 +10,9 @@ import {
   faExclamationTriangle,
   faKey,
 } from '@fortawesome/free-solid-svg-icons';
+import { HotToastService } from '@ngneat/hot-toast';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { ErrorService } from 'src/app/core/error/error.service';
 import { onlySoulcode } from 'src/app/shared/validators/only-soulcode';
 
 @Component({
@@ -26,9 +32,14 @@ export class LoginComponent implements OnInit {
     password: [null, [Validators.required, Validators.minLength(8)]],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toast: HotToastService,
+    private error: ErrorService,
+    private title: Title
+  ) {}
 
-  submitting = false;
   signingIn = false;
   activeModal = false;
 
@@ -37,12 +48,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitting = true;
-    console.log(this.loginForm.value);
+    this.signingIn = true;
+    this.authService.login(this.loginForm.value).subscribe({
+      next: () => (this.signingIn = false),
+      error: (err) => this.onError(err),
+    });
   }
 
   onGoogle() {
     this.signingIn = true;
+    this.authService.signInGoogle().subscribe({
+      error: (err) => this.onError(err),
+    });
+  }
+
+  onError(err: FirebaseError) {
+    this.toast.error(this.error.get(err.code));
+    this.signingIn = false;
   }
 
   get email() {
@@ -53,5 +75,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password')!;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title.setTitle('Login | Pro Attendance');
+  }
 }

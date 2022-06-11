@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pro-attendance": {
+      "hosting": {
+        "pro-attendance": [
+          "pro-attendance"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pro-attendance"
+  }
+}

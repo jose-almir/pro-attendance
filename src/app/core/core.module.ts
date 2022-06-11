@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -13,7 +14,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FontAwesomeModule
   ],
   exports: [
     HeaderComponent,

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseError } from '@angular/fire/app';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -8,6 +10,9 @@ import {
   faKey,
   faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { HotToastService } from '@ngneat/hot-toast';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { ErrorService } from 'src/app/core/error/error.service';
 import { matchPasswords } from 'src/app/shared/validators/match-password';
 import { onlySoulcode } from 'src/app/shared/validators/only-soulcode';
 
@@ -34,18 +39,36 @@ export class SignupComponent implements OnInit {
     { validators: [matchPasswords] }
   );
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toast: HotToastService,
+    private error: ErrorService,
+    private title: Title
+  ) {}
 
-  submitting = false;
   signingIn = false;
 
   onSubmit() {
-    this.submitting = true;
-    console.log(this.signupForm.value);
+    this.signingIn = true;
+    this.authService.signup(this.signupForm.value).subscribe({
+      next: () => (this.signingIn = false),
+      error: (err) => this.onError(err),
+    });
   }
 
   onGoogle() {
     this.signingIn = true;
+    this.authService.signInGoogle().subscribe({
+      next: () => (this.signingIn = false),
+      error: (err) => this.onError(err),
+    });
+  }
+
+  onError(err: FirebaseError) {
+    console.log(err.code);
+    this.toast.error(this.error.get(err.code));
+    this.signingIn = false;
   }
 
   get displayName() {
@@ -60,5 +83,7 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('password')!;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title.setTitle('Cadastrar | Pro Attendance');
+  }
 }

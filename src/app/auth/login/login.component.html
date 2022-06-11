@@ -69,9 +69,9 @@
       </p>
     </div>
     <button
-      [disabled]="loginForm.invalid || submitting"
+      [disabled]="loginForm.invalid || signingIn"
       class="button is-info is-fullwidth"
-      [class.is-loading]="submitting"
+      [class.is-loading]="signingIn"
     >
       Login
     </button>

@@ -116,9 +116,9 @@
       </div>
     </div>
     <button
-      [disabled]="signupForm.invalid || submitting"
+      [disabled]="signupForm.invalid || signingIn"
       class="button is-info is-fullwidth"
-      [class.is-loading]="submitting"
+      [class.is-loading]="signingIn"
     >
       Cadastrar
     </button>

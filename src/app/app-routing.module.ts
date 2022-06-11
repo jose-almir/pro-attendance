@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundError } from 'rxjs';
 import { HeaderComponent } from './core/header/header.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
+import { UserVerifiedGuard } from './shared/guards/user-verified.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: HeaderComponent,
+    canActivate: [UserVerifiedGuard],
     children: [
       {
         path: '',

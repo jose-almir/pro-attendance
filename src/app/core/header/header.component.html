@@ -1,4 +1,4 @@
-<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+<nav class="navbar is-info has-shadow" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" routerLink="/">
       <img
@@ -24,6 +24,15 @@
     <div class="navbar-start">
       <a class="navbar-item" routerLink="/turmas"> Turmas </a>
       <a class="navbar-item" routerLink="/chamadas"> Chamadas </a>
+    </div>
+    <div class="navbar-end" *ngIf="logged$ | async">
+      <a routerLink="/perfil" class="navbar-item">
+        <fa-icon class="mr-1" [icon]="faUser"></fa-icon> 
+        {{ user?.displayName }}
+      </a>
+      <a (click)="logout()" class="navbar-item">
+        <fa-icon [icon]="faLogout"></fa-icon>
+      </a>
     </div>
   </div>
 </nav>

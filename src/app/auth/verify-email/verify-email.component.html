@@ -1,0 +1,12 @@
+<div class="section">
+  <h1 class="title">
+    <fa-icon class="mr-1" [icon]="faEmail"></fa-icon>
+    Verifique seu email
+  </h1>
+  <p class="subtitle">
+    Para garantir que esta conta é válida verifique sua caixa de entrada para
+    confirmar este email é seu dentro de 5 minutos.
+  </p>
+  <div *ngIf="sent" class="is-text-primary">Email de verificação enviado</div>
+  <p>Recarregue esta página se já tiver verificado sua conta.</p>
+</div>

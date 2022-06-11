@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AuthComponent,
     LoginComponent,
     SignupComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    VerifyEmailComponent
   ],
   imports: [
     CommonModule,
