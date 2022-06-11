@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UserVerifiedGuard implements CanActivate, CanDeactivate<unknown> {
+export class UserVerifiedGuard implements CanActivate {
   constructor(private auth: Auth, private router: Router) {}
 
   canActivate(
@@ -29,29 +29,6 @@ export class UserVerifiedGuard implements CanActivate, CanDeactivate<unknown> {
             return true;
           } else {
             this.router.navigateByUrl('/auth/email');
-            return false;
-          }
-        } else {
-          this.router.navigateByUrl('/auth');
-        }
-        return false;
-      })
-    );
-  }
-
-  canDeactivate(
-    component: VerifyEmailComponent,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
-  ): Observable<boolean> {
-    return authState(this.auth).pipe(
-      map((user) => {
-        if (user) {
-          if (user.emailVerified) {
-            this.router.navigateByUrl('/');
-            return true;
-          } else {
             return false;
           }
         } else {

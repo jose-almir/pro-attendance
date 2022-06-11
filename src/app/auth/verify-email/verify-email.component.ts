@@ -16,18 +16,32 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // this.sent = sessionStorage.getItem('sent') != null;
+    this.sent = sessionStorage.getItem('sent') != null;
 
-    // if (!this.sent) {
-    //   this.authService.emailVerification().subscribe({
-    //     next: (wasSent) => {
-    //       if (wasSent) {
-    //         this.sent = true;
-    //         sessionStorage.setItem('sent', '1');
-    //       }
-    //     },
-    //   });
-    // }
+    if (!this.sent) {
+      this.authService.emailVerification().subscribe({
+        next: (wasSent) => {
+          if (wasSent) {
+            this.sent = true;
+            sessionStorage.setItem('sent', '1');
+          } else {
+            this.router.navigateByUrl('/');
+            sessionStorage.clear();
+          }
+        },
+      });
+    } else {
+      this.authService.userVerified.subscribe((verified) => {
+        if (verified) {
+          this.router.navigateByUrl('/');
+          sessionStorage.clear();
+        }
+      });
+    }
+  }
+
+  onLogout() {
+    this.authService.logout().subscribe(() => sessionStorage.clear());
   }
 
   ngOnDestroy(): void {}

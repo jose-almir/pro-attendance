@@ -33,16 +33,22 @@ export class AuthService {
   login(data: AuthData) {
     return from(
       signInWithEmailAndPassword(this.auth, data.email, data.password)
-    ).pipe(tap(() => this.router.navigateByUrl('/')));
+    ).pipe(
+      tap(({ user }) => {
+        this.currentUser = user;
+        this.router.navigateByUrl('/');
+      })
+    );
   }
 
   signup(data: UserData) {
     return from(
       createUserWithEmailAndPassword(this.auth, data.email, data.password)
     ).pipe(
-      tap((credentials) =>
-        updateProfile(credentials.user, { displayName: data.displayName })
-      ),
+      tap(({ user }) => {
+        this.currentUser = user;
+        updateProfile(user, { displayName: data.displayName });
+      }),
       tap(() => this.router.navigateByUrl('/'))
     );
   }
@@ -52,7 +58,10 @@ export class AuthService {
     provider.setCustomParameters({ hd: 'soulcodeacademy.org' });
 
     return from(signInWithPopup(this.auth, provider)).pipe(
-      tap(() => this.router.navigateByUrl('/'))
+      tap(({ user }) => {
+        this.currentUser = user;
+        this.router.navigateByUrl('/');
+      })
     );
   }
 
@@ -65,11 +74,26 @@ export class AuthService {
     );
   }
 
+  get userVerified() {
+    return authState(this.auth).pipe(
+      first(),
+      map((user) => user?.emailVerified)
+    );
+  }
+
   emailVerification() {
     return authState(this.auth).pipe(
       first(),
       map((user) => {
-          from(sendEmailVerification(user!));
+        console.log(user?.emailVerified);
+        if (user?.emailVerified) {
+          return false;
+        } else {
+          sendEmailVerification(user!).then(() =>
+            console.log(`Email enviado p/ ${user?.email}`)
+          );
+          return true;
+        }
       })
     );
   }

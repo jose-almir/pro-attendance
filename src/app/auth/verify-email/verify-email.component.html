@@ -5,8 +5,9 @@
   </h1>
   <p class="subtitle">
     Para garantir que esta conta é válida verifique sua caixa de entrada para
-    confirmar este email é seu dentro de 5 minutos.
+    confirmar este email é seu.
   </p>
   <div *ngIf="sent" class="is-text-primary">Email de verificação enviado</div>
   <p>Recarregue esta página se já tiver verificado sua conta.</p>
+  <button (click)="onLogout()" class="button is-primary">Sair da aplicação</button>
 </div>
