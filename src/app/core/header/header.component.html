@@ -22,11 +22,11 @@
   </div>
   <div class="navbar-menu" [class.is-active]="active">
     <div class="navbar-start">
-      <a class="navbar-item" routerLink="/turmas"> Turmas </a>
-      <a class="navbar-item" routerLink="/chamadas"> Chamadas </a>
+      <a class="navbar-item" routerLinkActive="is-active" routerLink="/turmas"> Turmas </a>
+      <a class="navbar-item" routerLinkActive="is-active" routerLink="/chamadas"> Chamadas </a>
     </div>
     <div class="navbar-end" *ngIf="logged$ | async">
-      <a routerLink="/perfil" class="navbar-item">
+      <a routerLinkActive="is-active" routerLink="/perfil" class="navbar-item">
         <fa-icon class="mr-1" [icon]="faUser"></fa-icon> 
         {{ user?.displayName }}
       </a>

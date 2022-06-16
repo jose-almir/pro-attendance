@@ -1,0 +1,41 @@
+<form [formGroup]="addClassForm" class="section">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a routerLink="/turmas">Turmas</a></li>
+      <li class="is-active"><a routerLink="add">Adicionar</a></li>
+    </ul>
+  </nav>
+  <div class="field">
+    <label class="label">Nome da turma</label>
+    <div class="control">
+      <input type="text" class="input" placeholder="Ex: BCW18 - JFS" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label is-flex is-justify-content-space-between"
+      >Lista de alunos
+
+      <button class="button is-primary is-small" (click)="newAluno()" type="button">
+        <fa-icon [icon]="faAdd"></fa-icon> Aluno
+      </button>
+    </label>
+    <div formArrayName="alunos">
+      <div
+        class="is-flex is-align-items-center mb-1"
+        *ngFor="let aluno of alunos.controls; let i = index"
+      >
+        <span class="tag is-black mr-1">{{i + 1}}</span>
+        <input
+          [formControlName]="i"
+          type="text"
+          class="input"
+          placeholder="Nome do aluno"
+        />
+        <button (click)="removeAluno(i)" class="button is-danger is-small ml-1" type="button">
+          Remover
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
